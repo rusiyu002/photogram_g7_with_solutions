@@ -12,6 +12,12 @@ class PicturesController < ApplicationController
   end
 
   def show
+    #the parameters look like {"the_id"}
+     id_number = params["the_id"]
+     p=Photo.find(id_number)
+     @the_caption=p.caption
+     @the_source=p.source
+     @the_timestamp=p.created_at
      render("show.html.erb")
   end
 
