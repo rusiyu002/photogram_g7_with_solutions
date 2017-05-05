@@ -1,35 +1,65 @@
 class PicturesController < ApplicationController
+
   def new_form
-     render("new_form.html.erb")
+
+    render("pictures/new_form.html.erb")
+
   end
 
   def create_row
-     render("create_row.html.erb")
+
+    @my_photo = Photo.new
+    @my_photo.caption = params["the_caption"]
+    @my_photo.source = params["image_url"]
+    @my_photo.save
+
+    @current_count = Photo.count
+
+  #  render("pictures/create_row.html.erb")
+    redirect_to("/photos")
   end
 
   def index
-     render("index.html.erb")
+
+    @list_of_photos = Photo.all.order(:created_at => :desc)
+
+    render("pictures/index.html.erb")
   end
 
   def show
-    #the parameters look like {"the_id"}
-     id_number = params["the_id"]
-     p=Photo.find(id_number)
-     @the_caption=p.caption
-     @the_source=p.source
-     @the_timestamp=p.created_at
-     render("show.html.erb")
+    # The parameters look like: {"the_id"=>"4"}
+    @my_photo = Photo.find(params["the_id"])
+
+    render("pictures/show.html.erb")
   end
 
   def edit_form
-     render("edit_form.html.erb")
+
+    @my_photo = Photo.find(params["la_id"])
+
+    render("pictures/edit_form.html.erb")
   end
 
   def update_row
-     render("update_row.html.erb")
+
+    @my_photo = Photo.find(params["la_id"])
+    @my_photo.caption = params["the_caption"]
+    @my_photo.source = params["image_url"]
+    @my_photo.save
+
+    #render("pictures/update_row.html.erb")
+    redirect_to("/photos/" + params["la_id"])
   end
 
   def destroy_row
-     render("destroy_row.html.erb")
+
+    @my_photo = Photo.find(params["da_id"])
+    @my_photo.destroy
+
+    @current_count = Photo.count
+
+    #render("pictures/destroy_row.html.erb")
+    redirect_to("/photos")
   end
+
 end

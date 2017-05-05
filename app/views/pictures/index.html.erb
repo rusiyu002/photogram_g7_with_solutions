@@ -1,2 +1,13 @@
-<h1>Pictures#index</h1>
-<p>Find me in app/views/pictures/index.html.erb</p>
+<h1> All Photos </h1>
+
+<a href="/photos/new"> Add a new photo </a>
+
+<% @list_of_photos.each do |a_photo| %>
+<div class="thumbnail">
+<img src="<%= a_photo.source %>">
+
+<a href="/photos/<%= a_photo.id %>" class="btn btn-secondary btn-block">Show details</a>
+<a href="/photos/<%= a_photo.id %>/edit" class="btn btn-secondary btn-block">Edit </a>
+<a href="/delete_photo/<%= a_photo.id %>" class="btn btn-secondary btn-block">Delete</a>
+</div>
+<% end %>
